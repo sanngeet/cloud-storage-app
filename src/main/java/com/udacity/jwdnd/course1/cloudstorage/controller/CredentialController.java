@@ -52,7 +52,7 @@ public class CredentialController {
 
         model.addAttribute("error", errorMessage);
 
-        return "result";
+        return "redirect:/result";
     }
 
     @PostMapping("/delete")
@@ -65,7 +65,7 @@ public class CredentialController {
 
         model.addAttribute("error", errorMessage);
 
-        return "result";
+        return "redirect:/result";
     }
 
     @GetMapping(value = "/getDecryptedPassword/{credentialId}", consumes = MediaType.APPLICATION_JSON_VALUE)

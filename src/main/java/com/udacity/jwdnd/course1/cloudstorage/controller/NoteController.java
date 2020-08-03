@@ -36,7 +36,7 @@ public class NoteController {
 
         model.addAttribute("error", errorMessage);
 
-        return "result";
+        return "redirect:/result";
     }
 
     @PostMapping("/delete")
@@ -48,6 +48,6 @@ public class NoteController {
         }
 
         model.addAttribute("error", errorMessage);
-        return "result";
+        return "redirect:/result";
     }
 }

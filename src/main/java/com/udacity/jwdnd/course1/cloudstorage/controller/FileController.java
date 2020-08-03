@@ -33,7 +33,7 @@ public class FileController {
         String fileName = multipartFile.getOriginalFilename();
 
         if (multipartFile.isEmpty()) {
-            errorMessage = "Please choose file you want to upload.";
+            errorMessage = "Please choose a file you want to upload.";
         }
 
         if (fileService.filenameExists(fileName)) {
@@ -61,7 +61,7 @@ public class FileController {
         }
 
         model.addAttribute("errorMessage", errorMessage);
-        return "result";
+        return "redirect:/result";
     }
 
     @GetMapping("/download")
@@ -92,6 +92,6 @@ public class FileController {
 
         model.addAttribute("errorMessage", errorMessage);
 
-        return "result";
+        return "redirect:/result";
     }
 }
