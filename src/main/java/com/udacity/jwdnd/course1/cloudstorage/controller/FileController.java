@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class FileController {
 
     @PostMapping
     public String uploadFile(Authentication authentication, @RequestParam("fileUpload") MultipartFile multipartFile,
-                             Model model) throws IOException {
+                             Model model, RedirectAttributes redirectAttributes) throws IOException {
         String errorMessage = null;
         String fileName = multipartFile.getOriginalFilename();
 
@@ -60,7 +61,7 @@ public class FileController {
             }
         }
 
-        model.addAttribute("errorMessage", errorMessage);
+        redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
         return "redirect:/result";
     }
 
@@ -83,15 +84,14 @@ public class FileController {
     }
 
     @PostMapping("delete")
-    public String deleteFile(@RequestParam(value = "fileId") Integer fileId, Model model) {
+    public String deleteFile(@RequestParam(value = "fileId") Integer fileId, Model model, RedirectAttributes redirectAttributes) {
         String errorMessage = null;
 
         if (this.fileService.deleteFile(fileId) < 1) {
             errorMessage = "There was an error deleting the file. Please try again.";
         }
 
-        model.addAttribute("errorMessage", errorMessage);
-
+        redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
         return "redirect:/result";
     }
 }

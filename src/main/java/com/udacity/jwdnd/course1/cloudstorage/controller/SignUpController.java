@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/signup")
@@ -25,7 +26,7 @@ public class SignUpController {
     }
 
     @PostMapping
-    public String signUpUser(@NonNull @ModelAttribute User user, Model model) {
+    public String signUpUser(@NonNull @ModelAttribute User user, Model model, RedirectAttributes redirectAttributes) {
 
         String signupError = null;
 
@@ -40,10 +41,12 @@ public class SignUpController {
         }
 
         if (signupError == null) {
-            model.addAttribute("signupSuccess", true);
-        } else
+            redirectAttributes.addFlashAttribute("signupSuccess", true);
+            return "redirect:login";
+        } else {
             model.addAttribute("signupError", signupError);
-        return "signup";
+            return "signup";
+        }
     }
 
     @PostMapping("/")

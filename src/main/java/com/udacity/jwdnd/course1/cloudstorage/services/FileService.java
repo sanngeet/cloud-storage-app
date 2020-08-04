@@ -26,8 +26,8 @@ public class FileService {
         return fileMapper.getFiles(userId);
     }
 
-    public Integer deleteFile(Integer userId) {
-        return fileMapper.deleteFile(userId);
+    public Integer deleteFile(Integer fileId) {
+        return fileMapper.deleteFile(fileId);
     }
 
     public Boolean filenameExists(String fileName) {

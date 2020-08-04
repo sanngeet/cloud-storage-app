@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -28,7 +29,7 @@ public class CredentialController {
     }
 
     @PostMapping
-    public String addUpdate(Authentication authentication, Credentials credential, Model model) {
+    public String addUpdate(Authentication authentication, Credentials credential, Model model, RedirectAttributes redirectAttributes) {
         String errorMessage = null;
 
         SecureRandom random = new SecureRandom();
@@ -49,21 +50,20 @@ public class CredentialController {
                 errorMessage = "There was an error updating credentials. Please try again.";
             }
         }
-
-        model.addAttribute("error", errorMessage);
+        redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
 
         return "redirect:/result";
     }
 
     @PostMapping("/delete")
-    public String deleteCredentials(@RequestParam Integer credentialId, Model model) {
+    public String deleteCredentials(@RequestParam Integer credentialId, Model model, RedirectAttributes redirectAttributes) {
         String errorMessage = null;
 
         if (credentialService.delete(credentialId) < 1) {
             errorMessage = "There was an error deleting the credentials. Please try again.";
         }
 
-        model.addAttribute("error", errorMessage);
+        redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
 
         return "redirect:/result";
     }

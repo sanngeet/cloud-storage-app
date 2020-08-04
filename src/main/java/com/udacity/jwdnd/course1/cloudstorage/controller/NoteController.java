@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequestMapping("/note")
 @Controller
@@ -20,7 +21,7 @@ public class NoteController {
     }
 
     @PostMapping
-    public String addAndUpdateNote(Authentication authentication, Note note, Model model) {
+    public String addAndUpdateNote(Authentication authentication, Note note, Model model, RedirectAttributes redirectAttributes) {
         String errorMessage = null;
 
         if (note.getNoteId() == null) {
@@ -34,20 +35,20 @@ public class NoteController {
             }
         }
 
-        model.addAttribute("error", errorMessage);
+        redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
 
         return "redirect:/result";
     }
 
     @PostMapping("/delete")
-    public String deleteNote(@RequestParam(value = "noteId") Integer noteId, Model model) {
+    public String deleteNote(@RequestParam(value = "noteId") Integer noteId, Model model, RedirectAttributes redirectAttributes) {
         String errorMessage = null;
 
         if (this.noteService.delete(noteId) < 1) {
             errorMessage = "There was an error deleting the note. Please try again.";
         }
 
-        model.addAttribute("error", errorMessage);
+        redirectAttributes.addFlashAttribute("errorMessage", errorMessage);
         return "redirect:/result";
     }
 }

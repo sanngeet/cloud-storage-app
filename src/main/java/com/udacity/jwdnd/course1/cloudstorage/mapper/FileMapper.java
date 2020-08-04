@@ -10,8 +10,8 @@ public interface FileMapper {
     @Select("SELECT * FROM files WHERE userid=#{userId}")
     public List<File> getFiles(Integer userId);
 
-    @Delete("DELETE FROM files WHERE userid=#{userId}")
-    public Integer deleteFile(Integer userId);
+    @Delete("DELETE FROM files WHERE fileId=#{fileId}")
+    public Integer deleteFile(Integer fileId);
 
     @Select("SELECT * FROM files WHERE fileId=#{fileId}")
     public File getOne(Integer fileId);

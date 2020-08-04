@@ -12,11 +12,14 @@
 <div class="container justify-content-center w-25 p-3" style="background-color: #eeeeee; margin-top: 5em;">
     <h1 class="display-5">Login</h1>
     <form action="#" method="POST" th:action="@{/login}">
+        <div th:if="${signupSuccess}" id="signupSuccess" class="alert alert-success">
+            You have successfully signed up! You may login now.
+        </div>
         <div id="errorMessage" th:if="${param.error}" class="alert alert-danger">
-            Invalid username or password
+            Invalid username or password!
         </div>
         <div id="logoutMessage" th:if="${param.logout}" class="alert alert-dark">
-            You have been logged out
+            You have been logged out.
         </div>
         <span th:text="${param.logout}"></span>
         <div class="form-group">
